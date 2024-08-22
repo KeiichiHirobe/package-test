@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: Test Streaming API
+  description: |
+    Test Streaming API
+  version: 1.0.0
+tags:
+  - name: Chat
+    description: |
+      Chat
+  - name: Translate
+    description: |
+      Translate
+servers:
+  - url: "http://localhost:3978"
+    description: local sandbox
+paths:
+  /test/stream:
+    get:
+      tags:
+        - Chat
+      summary: get streaming data
+      description: |
+        get streaming data
+      responses:
+        200:
+          description: |
+            Successfully get streaming data
+          headers:
+            Transfer-Encoding:
+              schema:
+                type: string
+                enum: [chunked]
+              description: chunked
+          content:
+            text/plain:
+              schema:
+                type: string
