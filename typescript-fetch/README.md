@@ -7,14 +7,14 @@ https://github.com/OpenAPITools/openapi-generator/blob/master/samples/client/pet
 Name of package.json should not be upper-case, so you should change it to lower-case.
 
 ```
-rm -rf /Users/keiichi.hirobe/repos/package-test/gen
+rm -rf /Users/keiichi.hirobe/repos/package-test/typescript-fetch/gen
 docker run --rm -v "/Users/keiichi.hirobe/repos/package-test:/local" --pull=always openapitools/openapi-generator-cli:latest-release generate \
                 -i local/openapi-spec/chatbots_api.yml \
                 -g typescript-fetch \
                 -o local/typescript-fetch/gen \
                 --git-repo-id=package-test \
                 --git-user-id=KeiichiHirobe \
-                --additional-properties=npmName=@keiichihirobe/streaming-api-test
+                --additional-properties npmName=@keiichihirobe/streaming-api-test
 ```
 
 You have to change package.json manually like this because you can't specify repositry->directory.
