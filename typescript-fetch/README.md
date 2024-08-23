@@ -33,11 +33,6 @@ https://docs.github.com/en/packages/working-with-a-github-packages-registry/work
 https://zenn.dev/moneyforward/articles/20230620-github-packages
 
 
-Accoreding to https://docs.npmjs.com/cli/v10/configuring-npm/package-json#git-urls-as-dependencies, npm does not support to specify subdirectory for git urls as dependency.
-So if your module you want to publish as a package is in subdirectory you should use npm.
-
-## Client
-
 You should just update ~/.npmrc
 
 ```
@@ -45,3 +40,18 @@ You should just update ~/.npmrc
 @keiichihirobe:registry=https://npm.pkg.github.com
 ```
 
+
+To publish to GitHub Package, just
+
+```
+npm publish
+```
+
+
+
+Accoreding to https://docs.npmjs.com/cli/v10/configuring-npm/package-json#git-urls-as-dependencies, npm does not support to specify subdirectory for git urls as dependency.
+So if your module you want to publish as a package is in subdirectory you should use npm.
+
+## Client
+
+In client side, you should also update ~/.npmrc
