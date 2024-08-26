@@ -52,4 +52,20 @@ export class ChatApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+    // Customized by Hirobe
+    async testStreamGetWithoutPreloadContent(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Response> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/test/stream`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return response
+    }
+
 }
