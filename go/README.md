@@ -5,7 +5,7 @@ https://openapi-generator.tech/docs/generators/go
 
 ```
 rm -rf /Users/keiichi.hirobe/repos/package-test/go/gen
-docker run --rm -v "/Users/keiichi.hirobe/repos/package-test:/local" --pull=always openapitools/openapi-generator-cli:latest-release generate \
+docker run --rm -v "/Users/keiichi.hirobe/repos/package-test:/local" openapitools/openapi-generator-cli:v7.8.0 generate \
                 -i local/openapi-spec/chatbots_api.yml \
                 -g go \
                 -o local/go/gen \
