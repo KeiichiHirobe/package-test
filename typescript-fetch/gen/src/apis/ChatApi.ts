@@ -52,7 +52,10 @@ export class ChatApi extends runtime.BaseAPI {
         return await response.value();
     }
 
-    // Customized by Hirobe
+    /**
+     * get streaming data 
+     * get streaming data
+     */
     async testStreamGetWithoutPreloadContent(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Response> {
         const queryParameters: any = {};
 
