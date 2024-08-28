@@ -32,12 +32,10 @@ To get the modules, you should set up the following.
 
 ### Source code reading for net/http
 
-When a response body has been fully read, the underlying connection is automatically released.
+When a response body has been fully read, [the underlying connection is automatically released](https://github.com/golang/go/blob/aeac0b6cbfb42bc9c9301913a191bb09454d316a/src/net/http/transport.go#L2326-L2334).
 
 You should call `response.Body.Close()` explicitly to release/close connection when you stop reading the response body.
-Interestingly, in such case, net/http tries to read the body up to 262144 bytes and then release the connection if all the body has been read, and close the connection if not.
-
-https://github.com/golang/go/blob/aeac0b6cbfb42bc9c9301913a191bb09454d316a/src/net/http/transfer.go#L985-L1003
+Interestingly, in such case, [net/http tries to read the body up to 262144 bytes and then release the connection if all the body has been read, and close the connection if not](https://github.com/golang/go/blob/aeac0b6cbfb42bc9c9301913a191bb09454d316a/src/net/http/transfer.go#L985-L1003)
 
 ### Example
 

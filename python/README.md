@@ -38,18 +38,13 @@ To get the modules, you should set up the following.
 
 ### Source code reading for aiohttp.client
 
-When a response body has been fully read, the underlying connection is automatically released.
-https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/client_reqrep.py#L969-L980
+When a response body has been fully read, [the underlying connection is automatically released](https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/client_reqrep.py#L969-L980)
 
-Even if you stop reading a response body, the destructor will try to release the underlying connection.
-https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/client_reqrep.py#L838-L853
+Even if you stop reading a response body, the destructor will try to [release the underlying connection](https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/client_reqrep.py#L838-L853)
 
-As far as I read the implementation of _release/should_close, it seems like the underlying connection will be closed instead of released when the response body has not been fully read. 
-https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/connector.py#L663-L665
-https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/client_proto.py#L57
+As far as I read the implementation of [_release](https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/connector.py#L663-L665)/[should_close](https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/client_proto.py#L57), it seems like the underlying connection will be closed instead of released when the response body has not been fully read. 
 
-However, it would be better to close the connection explicitly in case an exception occurs within the implementation of the library reading the body or on the application side, as in the implementation of the read function below.
-https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/client_reqrep.py#L1062-L1071
+However, it would be better to close the connection explicitly in case an exception occurs within the implementation of the library reading the body or on the application side, as in the implementation of the [read function](https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/client_reqrep.py#L1062-L1071).
 
 
 ### Example
