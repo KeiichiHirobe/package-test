@@ -66,14 +66,14 @@ async def coro():
     try:
         # https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/streams.py#L76
         async for line in res.content:
-            print(line)
-            # do some task
+            decoded = line.decode("utf-8")
+            trimmed = decoded.rstrip()
+            print(trimmed)
     except BaseException:
         res.close()
         raise
 
     await chat_api.api_client.close()
-    await asyncio.sleep(2)
 
 asyncio.run(coro(), debug=True)
 ```

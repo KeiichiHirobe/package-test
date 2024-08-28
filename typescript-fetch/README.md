@@ -61,4 +61,43 @@ In client side, you should also update ~/.npmrc
 
 ## Streaming API Client
 
-All functions in the generated client code try to parse the response, so I just copid the original function and changed it to return the response before parsing the body of it.
+All functions in the generated client code try to parse the response, so I added a new function. I just copid the original function and changed it to return the response before parsing the body of it.
+
+
+### Example
+
+```
+import { ChatApi } from "@keiichihirobe/streaming-api-test";
+
+async function fetchStream() {
+    const api = new ChatApi();
+    const response = await api.testStreamGetWithoutPreloadContent();
+    console.log(`Status Code: ${response.status}`);
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    if (response.body === null) {
+        throw new Error(`HTTP response.body is null`);
+    }
+
+    const decoder = new TextDecoder('utf-8');
+
+    let buffer = '';
+    for await (const chunk of response.body) {
+        // Decode the chunk of data into a string
+        buffer += decoder.decode(chunk, { stream: true });
+        // Split the buffer into lines
+        let lines = buffer.split('\n');
+        // The last line might be incomplete, so keep it in the buffer
+        buffer = lines.pop() ?? '';
+        // Process each complete line
+        for (const line of lines) {
+            console.log(line)
+        }
+    }
+}
+
+fetchStream().catch(console.error);
+```
