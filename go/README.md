@@ -9,6 +9,7 @@ docker run --rm -v "/Users/keiichi.hirobe/repos/package-test:/local" openapitool
                 -i local/openapi-spec/chatbots_api.yml \
                 -g go \
                 -o local/go/gen \
+                -t local/go/custom_template \
                 --git-repo-id=package-test \
                 --git-user-id=KeiichiHirobe \
                 --global-property "modelTests=false,apiTests=false" \
