@@ -3,6 +3,7 @@ info:
   title: Test Streaming API
   description: |
     Test Streaming API
+  # This version is the same as the version of packages
   version: 1.0.0
 tags:
   - name: Chat
