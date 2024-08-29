@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  extract-and-tag:
+  release:
     runs-on: ubuntu-22.04
 
     steps:
@@ -34,3 +34,21 @@ jobs:
           release_name: ${{ env.VERSION }}
           body: ${{ github.event.pull_request.body }}
           draft: false
+
+      - name: "Set up access to private NPM repos."
+        run: |
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> ~/.npmrc
+          echo "@keiichihirobe:registry=https://npm.pkg.github.com" >> ~/.npmrc
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.11.0'
+        env:
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: npm Publish
+        working-directory: typescript-fetch/gen
+        run: npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
