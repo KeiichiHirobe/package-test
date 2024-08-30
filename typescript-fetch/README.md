@@ -64,6 +64,11 @@ In client side, you should also update ~/.npmrc
 All functions in the generated client code try to parse the response, so I added a new function. I just copid the original function and changed it to return the response before parsing the body of it.
 
 
+### Source code reading for node.js
+
+I am still checking [ReadableStream implementation](https://github.com/nodejs/node/blob/main/lib/internal/webstreams/readablestream.js)
+
+
 ### Example
 
 ```
