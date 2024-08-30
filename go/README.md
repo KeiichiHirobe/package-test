@@ -18,6 +18,10 @@ docker run --rm -v "/Users/keiichi.hirobe/repos/package-test:/local" openapitool
 
 You should move go.mod/go.sum manually to the top directory because Go basically assume the files are located on top directory of the repository.
 
+I used a custom template to adjust generated code. See https://openapi-generator.tech/docs/templating#modifying-templates
+
+Template files are based on https://github.com/OpenAPITools/openapi-generator/tree/v7.8.0/modules/openapi-generator/src/main/resources/go, the commit for customize is at https://github.com/KeiichiHirobe/package-test/commit/eaa6dbb2514f135f131ab34cebc39a3e28b87f58
+
 ## Client
 
 To get the modules, you should set up the following.
