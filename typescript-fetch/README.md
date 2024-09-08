@@ -64,10 +64,9 @@ In client side, you should also update ~/.npmrc
 All functions in the generated client code try to parse the response, so I added a new function. I just copid the original function and changed it to return the response before parsing the body of it.
 
 
-### Source code reading for node.js
+### Source code reading for Node.js
 
-I am still checking [ReadableStream implementation](https://github.com/nodejs/node/blob/main/lib/internal/webstreams/readablestream.js)
-
+Node.js supported `fetch` since 2022, and `response.body` returns a [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams). As long as you use asynchronous iteration to read the response body, you don't need additional consideration to release resources. [When the response body has been fully read, the stream will be closed](https://github.com/nodejs/undici/blob/57f1b4e636b84ceeef4f048ce26d2c2348479727/lib/web/fetch/index.js#L1984-L1991) and when the caller decides to exit iteration prematurely, [the return method of the iterator will be called, and it will close the stream](https://github.com/nodejs/node/blob/67357ba8ff3d71f837a100aacd76e5ed3b15592b/lib/internal/webstreams/readablestream.js#L547-L556). We can expect [the implementation of `fetch`](https://github.com/nodejs/undici/tree/main) closes/releases the underlining connection properly when the stream is closed.
 
 ### Example
 

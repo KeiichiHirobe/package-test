@@ -30,7 +30,7 @@ Additionally, there are points to be mindful of in the implementation on the app
 Update api version and just run
 
 ```
-Make
+make
 ````
 
 It should generate the code, so just push it.
