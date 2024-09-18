@@ -52,18 +52,29 @@ However, it would be better to close the connection explicitly in case an except
 
 ```
 import asyncio
+import codecs
 from streamingapitest.api.chat_api import ChatApi
 
 async def coro():
     chat_api = ChatApi()
     res = await chat_api.test_stream_get_without_preload_content()
+    # We need this decoder to handle incomplete multibyte characters
+    decoder = codecs.getincrementaldecoder("utf-8")()
 
     try:
+        buffer: str = ""
+        # `async for line in res.content:` is useful because it provides iteration by line, but the limit length of chunk size is 2^17 byte, and it is too small for image size.
+        # Instead use `iter_chunked`
         # https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/streams.py#L76
-        async for line in res.content:
-            decoded = line.decode("utf-8")
-            trimmed = decoded.rstrip()
-            print(trimmed)
+        # https://github.com/aio-libs/aiohttp/blob/48a5e07ad833bd1a8fcb2ce6f85a41ad0cef9dc6/aiohttp/streams.py#L346-L347
+        async for chunk in res.content.iter_chunked(65536):
+            buffer += decoder.decode(chunk)
+            lines = buffer.split("\n")
+            buffer = lines.pop()
+            for line in lines:
+                trimmed = line.rstrip()
+                print(trimmed)
+
     except BaseException:
         res.close()
         raise
