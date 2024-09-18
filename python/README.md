@@ -24,7 +24,7 @@ https://python-poetry.org/docs/dependency-specification/#git-dependencies
 You can specify subdirectory like this.
 
 ```
-poetry add "git+https://github.com/KeiichiHirobe/package-test#subdirectory=python/gen"
+poetry add "git+https://github.com/KeiichiHirobe/package-test.git#subdirectory=python/gen"
 ```
 
 
